@@ -4,6 +4,7 @@ import com.example.lab03capas.domain.dto.requests.CreateSpecimenRequest;
 import com.example.lab03capas.domain.dto.requests.UpdateSpecimenRequest;
 import com.example.lab03capas.domain.dto.response.specimen.SpecimenResponse;
 import com.example.lab03capas.domain.entities.Specimen;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -41,12 +42,8 @@ public class SpecimenMapper {
                 .build();
     }
 
-    public List<SpecimenResponse> toDtoList(List<Specimen> specimen) {
-        return specimen.stream()
-                .map(this::toDto)
-                .toList();
+    public Page<SpecimenResponse> toDtoList(Page<Specimen> specimen) {
+        return specimen
+                .map(this::toDto);
     }
-
-    // TODO: El estudiante deberá agregar aquí el método para mapear un Page<Specimen> a Page<SpecimenResponse>
-    // pista: utilizando .map(this::toDto)
 }
