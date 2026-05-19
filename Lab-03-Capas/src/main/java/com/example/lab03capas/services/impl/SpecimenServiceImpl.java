@@ -5,15 +5,14 @@ import com.example.lab03capas.domain.dto.requests.CreateSpecimenRequest;
 import com.example.lab03capas.domain.dto.requests.UpdateSpecimenRequest;
 import com.example.lab03capas.domain.dto.response.specimen.SpecimenResponse;
 import com.example.lab03capas.domain.entities.Specimen;
+import com.example.lab03capas.exceptions.ResourceNotFoundException;
 import com.example.lab03capas.repositories.SpecimenRepository;
 import com.example.lab03capas.services.SpecimenService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.constraints.UUID;
 import org.springframework.stereotype.Service;
-
+import java.util.UUID;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +34,7 @@ public class SpecimenServiceImpl implements SpecimenService {
         if (specimens.isEmpty())
             throw new ResourceNotFoundException("No specimens are registered in Hyrule");
 
-        return specimens.stream()
-                .map(specimenMapper::toDto)
-                .collect(Collectors.toList());
+        return specimenMapper.toDtoList(specimenRepository.findAll());
     }
 
     @Override
